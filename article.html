@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Doballs Time</title>
+    <meta name="description" content="My first PWA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/materialize.min.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#00897B" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigasi -->
+    <nav class="teal lighten-1" role="navigation">
+    <div class="nav-wrapper container">
+      <a href="./index.html" class="brand-logo hide-on-med-and-up" id="logo-container">Detail Team</a>
+      <a href="./index.html"><i class="material-icons">arrow_back</i></a>
+    </div>
+    </nav>
+    <!-- Akhir Navigasi -->
+
+    <div class="container" id="body-content"></div>
+
+    <div class="fixed-action-btn toolbar">
+      <a class="btn-floating btn-large red">
+        <i class="large material-icons">menu</i>
+      </a>
+      <ul>
+        <li><a class="btn-floating tooltipped" data-position="top" data-tooltip="Save" id="save">
+          <i class="material-icons">save</i>
+        </a></li>
+        <li><a class="btn-floating tooltipped" data-position="top" data-tooltip="Delete" id="delete">
+          <i class="material-icons">delete_forever</i>
+        </a></li>
+      </ul>
+    </div>
+
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js"
+    ></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/idb.js"></script>
+    <script src="js/db.js"></script>
+
+    <script>
+      // REGISTER SERVICE WORKER
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function() {
+              console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function() {
+              console.log("Pendaftaran ServiceWorker gagal");
+            });
+        });
+      } else {
+        console.log("ServiceWorker belum didukung browser ini.");
+      }
+      document.addEventListener("DOMContentLoaded", function() {
+          var item = getArticleById();
+          var urlParams = new URLSearchParams(window.location.search);
+          var isFromSaved = urlParams.get("favorite");
+
+          var button = document.querySelectorAll('.fixed-action-btn');
+          M.FloatingActionButton.init(button, {
+          toolbarEnabled: true,
+          });
+
+          var tooltip = document.querySelectorAll('.tooltipped');
+          M.Tooltip.init(tooltip);
+
+          
+          var btnDelete = document.getElementById('delete');
+          btnDelete.onclick = function () {
+          var idTeam = new URLSearchParams(window.location.search).get("id");
+          idTeam = parseInt(idTeam); //konversi ke integer, menyesuaikan tipe data di indexedDB
+          console.log("Tombol FAB di klik.");
+          item.then(function () {
+            deleteTeam(idTeam);
+          });
+        };
+        
+
+          var save = document.getElementById('save');
+          save.onclick = function () {
+          item.then((team) => {
+          saveForLater(team);
+        });
+      };
+      });
+
+/*
+====> Untuk mengakses detail artikel <=====    
+        var urlParams = new URLSearchParams(window.location.search);
+        var isFromSaved = urlParams.get("favorite");
+  
+
+        var button = document.querySelectorAll('.fixed-action-btn');
+          M.FloatingActionButton.init(button, {
+          toolbarEnabled: true,
+        });
+
+        var tooltip = document.querySelectorAll('.tooltipped');
+          M.Tooltip.init(tooltip);
+
+        var btnSave = document.getElementById("save");
+          
+        if (isFromSaved) {
+            // Hide fab jika dimuat dari indexed db
+            btnSave.style.display = 'none';
+    
+            // ambil artikel lalu tampilkan
+            getSavedArticleById();
+            } else {
+            var item = getArticleById();
+          }  
+
+        btnSave.onclick = function() {
+            console.log("Tombol FAB di klik.");
+            item.then(function (team) {
+              saveForLater(team);
+            });
+          }
+      });
+*/
+    </script>
+  </body>
+</html>

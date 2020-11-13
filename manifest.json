@@ -1,0 +1,23 @@
+{
+    "name": "Doballs Time",
+    "short_name": "Doballs",
+    "gcm_sender_id": "703233021309",
+    "description": "Aplikasi Tilik Bola Sepak.",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#00897B",
+    "theme_color": "#00897B",
+    "icons": [{
+      "src": "/image/maskable_icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/image/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

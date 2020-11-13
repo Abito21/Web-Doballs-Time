@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Fixtures</title>
+</head>
+<body>
+   <main>
+      <div class="row">
+         <div class="container">
+            <div class="col s12 m12 l3"></div>
+            <div class="col s12 m12 l9">
+               <table class="highlight fonts-table">
+                  <thead>
+                     <tr>
+                        <th colspan="5" class="center">Scores</th>
+                     </tr>
+                     <tr class="center">
+                        <th>Status</th>
+                        <th>Home Team</th>
+                        <th colspan="2">Score</th>
+                        <th class="right-align">Away Team</th>
+                     </tr>
+                  </thead>
+      
+                  <tbody id="matches"></tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+   </main>
+
+   <script>
+   // REGISTER SERVICE WORKER
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function() {
+              console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function() {
+              console.log("Pendaftaran ServiceWorker gagal");
+            });
+        });
+      } else {
+        console.log("ServiceWorker belum didukung browser ini.");
+      }
+
+      // REQUEST API UNTUK PERTAMA KALI
+      document.addEventListener("DOMContentLoaded", function() {
+        getMatches();
+      });
+   </script>
+
+</body>
+</html>
