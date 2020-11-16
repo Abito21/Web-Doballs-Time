@@ -27,7 +27,9 @@ workbox.precaching.precacheAndRoute([
     { url: 'https://fonts.googleapis.com/icon?family=Material+Icons', revision: '1' },
     { url: 'https://fonts.gstatic.com/s/materialicons/v67/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2', revision: '1' },
     { url: 'https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js', revision: '1' },
-]);
+], {
+  ignoreUrlParametersMatching: [/.*/]
+});
 
 workbox.routing.registerRoute(
     /^https:\/\/fonts\.googleapis\.com/,
